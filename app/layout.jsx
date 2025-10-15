@@ -1,4 +1,12 @@
 import "./globals.css";
+import { Lexend } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+const lexend = Lexend({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 export const metadata = {
   title: "Property Pulse",
@@ -8,9 +16,11 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <html>
+    <html className={lexend.className}>
       <body>
+        <Navbar />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
