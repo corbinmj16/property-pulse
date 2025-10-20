@@ -11,6 +11,10 @@ const PropertyPage = async ({ params }) => {
   const { id } = await params;
   const property = await Property.findById(id).lean();
 
+  if (!property) {
+    return <h1 className="text-center text-2xl font-bold mt-10">Property Not Found</h1>;
+  }
+
   return (
     <>
       <PropertyHeaderImage image={property.images[0]} />

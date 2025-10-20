@@ -1,7 +1,7 @@
 "use client";
 
 import addProperty from "@/app/actions/addProperty";
-import { CldUploadButton, CldUploadWidget } from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
 
 const FormAddProperty = () => {
