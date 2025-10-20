@@ -36,7 +36,7 @@ const PropertySchema = new Schema(
         type: Number,
         required: true
     },
-    ammenities: [
+    amenities: [
         {
             type: String
         }
