@@ -6,7 +6,7 @@ import { getSessionUser } from "@/utils/getSessionUser";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export default async function addProperty(formData) {
+export default async function updateProperty(propertyId, formData) {
     await connectDB();
     const sessionUser = await getSessionUser();
 
@@ -16,10 +16,17 @@ export default async function addProperty(formData) {
 
     const { userId } = sessionUser;
 
-    // Access all values from amenities and images
-    const amenities = formData.getAll('amenities')
-    const images = formData.getAll('images')
+    const property = await Property.findById(propertyId);
 
+    if (!property) {
+        throw new Error('Property not found.')
+    }
+
+    if (property.owner.toString() !== userId) {
+        throw new Error('User does not own this property.')
+    }
+    
+    const amenities = formData.getAll('amenities')
     const propertyData = {
         owner: userId,
         type: formData.get('type'),
@@ -45,13 +52,12 @@ export default async function addProperty(formData) {
             email: formData.get('seller_info.email'),
             phone: formData.get('seller_info.phone'),
         },
-        images
     }
 
-    const newProperty = new Property(propertyData);
-    await newProperty.save();
+    const updatedProperty = await Property.findByIdAndUpdate(propertyId, propertyData)
 
     revalidatePath('/', 'layout')
 
-    redirect(`/properties/${newProperty._id}`)
+    redirect(`/properties/${updatedProperty._id}`)
+
 }

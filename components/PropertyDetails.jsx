@@ -1,4 +1,6 @@
 import { FaBath, FaBed, FaCheck, FaLocationArrow, FaRulerCombined, FaTimes } from "react-icons/fa";
+import PropertyMap from "./PropertyMap";
+import { convertServerToClientObject } from "@/utils/convertToObject";
 
 const PropretyDetails = ({ property }) => {
   return (
@@ -73,7 +75,7 @@ const PropretyDetails = ({ property }) => {
 
       {/* <!-- Map --> */}
       <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-        <div id="map">map</div>
+        <PropertyMap property={convertServerToClientObject(property)} />
       </div>
     </main>
   );
